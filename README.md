@@ -12,15 +12,19 @@ MeaningCloud is a cloud-based text analytics service that through APIs allows yo
 ## SDK versions
 
 
-|                     | v1.0.0                 |
-|---------------------|------------------------|
-| Deep Categorization | deepcategorization-1.0 |
-| Topics Extraction   | topics-2.0             |
-| Class               | class-2.0              |
-| Sentiment Analysis  | sentiment-2.1          |
-| Language Detection  | lang-4.0               |
-| Parser              | parser-4.0             |
-| Corporate Reputation| reputation-2.0         |
+|                          | v1.0.0                 |
+|--------------------------|------------------------|
+| Deep Categorization      | deepcategorization-1.0 |
+| Topics Extraction        | topics-2.0             |
+| Text Classification      | class-2.0              |
+| Sentiment Analysis       | sentiment-2.1          |
+| Language Identification  | lang-4.0               |
+| Parser                   | parser-2.0             |
+| Corporate Reputation     | reputation-2.0         |
+| Text Clustering          | clustering-1.1		    |
+| Summarization            | summarization-1.0      |
+| Document Structure       | documentstructure-1.0  |
+
 
 
 ## Getting started
