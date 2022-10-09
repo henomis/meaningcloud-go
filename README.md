@@ -33,7 +33,7 @@ MeaningCloud is a cloud-based text analytics service that through APIs allows yo
 
 You can load meaningcloud-go into your project by using:
 ```
-go install github.com/henomis/meaningcloud-go
+go get github.com/henomis/meaningcloud-go
 ```
 
 
