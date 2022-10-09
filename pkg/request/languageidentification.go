@@ -1,7 +1,6 @@
 package request
 
 import (
-	"encoding/json"
 	"fmt"
 
 	"github.com/go-playground/validator/v10"
@@ -51,9 +50,4 @@ func (l *LanguageIdentification) ToMultipartForm() (multipartform.MultipartForm,
 	)
 
 	return multipartForm, nil
-}
-
-func (l *LanguageIdentification) String() string {
-	bytes, _ := json.MarshalIndent(l, "", " ")
-	return string(bytes)
 }

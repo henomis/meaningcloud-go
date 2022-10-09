@@ -1,7 +1,6 @@
 package request
 
 import (
-	"encoding/json"
 	"fmt"
 
 	"github.com/go-playground/validator/v10"
@@ -80,9 +79,4 @@ func (s *Summarization) ToMultipartForm() (multipartform.MultipartForm, error) {
 	)
 
 	return multipartForm, nil
-}
-
-func (s *Summarization) String() string {
-	bytes, _ := json.MarshalIndent(s, "", " ")
-	return string(bytes)
 }

@@ -1,7 +1,6 @@
 package request
 
 import (
-	"encoding/json"
 	"fmt"
 
 	"github.com/go-playground/validator/v10"
@@ -91,9 +90,4 @@ func (p *Parser) ToMultipartForm() (multipartform.MultipartForm, error) {
 	multipartForm.AddOptionalField("egp", p.ExpandGlobalPolarity)
 
 	return multipartForm, nil
-}
-
-func (p *Parser) String() string {
-	bytes, _ := json.MarshalIndent(p, "", " ")
-	return string(bytes)
 }

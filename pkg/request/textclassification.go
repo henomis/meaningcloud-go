@@ -1,7 +1,6 @@
 package request
 
 import (
-	"encoding/json"
 	"fmt"
 
 	"github.com/go-playground/validator/v10"
@@ -73,9 +72,4 @@ func (t *TextClassification) ToMultipartForm() (multipartform.MultipartForm, err
 	multipartForm.AddOptionalField("expand_hierarchy", t.ExpandHierarchy)
 
 	return multipartForm, nil
-}
-
-func (t *TextClassification) String() string {
-	bytes, _ := json.MarshalIndent(t, "", " ")
-	return string(bytes)
 }

@@ -1,7 +1,6 @@
 package request
 
 import (
-	"encoding/json"
 	"fmt"
 
 	"github.com/go-playground/validator/v10"
@@ -69,9 +68,4 @@ func (d *DeepCategorization) ToMultipartForm() (multipartform.MultipartForm, err
 	multipartForm.AddOptionalField("ud", d.UserDictionary)
 
 	return multipartForm, nil
-}
-
-func (d *DeepCategorization) String() string {
-	bytes, _ := json.MarshalIndent(d, "", " ")
-	return string(bytes)
 }

@@ -1,7 +1,6 @@
 package request
 
 import (
-	"encoding/json"
 	"fmt"
 
 	"github.com/go-playground/validator/v10"
@@ -85,9 +84,4 @@ func (s *Sentiment) ToMultipartForm() (multipartform.MultipartForm, error) {
 	multipartForm.AddOptionalField("ud", s.UserDictionary)
 
 	return multipartForm, nil
-}
-
-func (s *Sentiment) String() string {
-	bytes, _ := json.MarshalIndent(s, "", " ")
-	return string(bytes)
 }
