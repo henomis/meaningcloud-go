@@ -42,26 +42,12 @@ func (c *CorporateReputation) ToMultipartForm() (multipartform.MultipartForm, er
 	multipartForm := multipartform.New()
 
 	multipartForm.AddField("key", c.Key)
-
 	multipartForm.AddField("lang", c.InputLanguage)
-
 	multipartForm.AddField("txt", c.Text)
-
-	if c.Model != nil {
-		multipartForm.AddField("model", *c.Model)
-	}
-
-	if c.Focus != nil {
-		multipartForm.AddField("focus", *c.Focus)
-	}
-
-	if c.Filter != nil {
-		multipartForm.AddField("filter", *c.Filter)
-	}
-
-	if c.RelaxedTypography != nil {
-		multipartForm.AddField("rt", *c.RelaxedTypography)
-	}
+	multipartForm.AddOptionalField("model", c.Model)
+	multipartForm.AddOptionalField("focus", c.Focus)
+	multipartForm.AddOptionalField("filter", c.Filter)
+	multipartForm.AddOptionalField("rt", c.RelaxedTypography)
 
 	return multipartForm, nil
 }

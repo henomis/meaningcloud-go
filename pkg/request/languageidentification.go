@@ -43,12 +43,12 @@ func (l *LanguageIdentification) ToMultipartForm() (multipartform.MultipartForm,
 	multipartForm := multipartform.New()
 
 	multipartForm.AddField("key", l.Key)
-
-	if l.Text != "" {
-		multipartForm.AddField("txt", l.Text)
-	} else if l.URL != "" {
-		multipartForm.AddField("url", l.URL)
-	}
+	multipartForm.AddMutualExclusiveFields(
+		map[string]string{
+			"txt": l.Text,
+			"url": l.URL,
+		},
+	)
 
 	return multipartForm, nil
 }

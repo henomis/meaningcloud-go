@@ -64,24 +64,20 @@ func (s *Summarization) ToMultipartForm() (multipartform.MultipartForm, error) {
 	multipartForm := multipartform.New()
 
 	multipartForm.AddField("key", s.Key)
-
-	if s.InputLanguage != nil {
-		multipartForm.AddField("lang", *s.InputLanguage)
-	}
-
-	if s.Text != "" {
-		multipartForm.AddField("txt", s.Text)
-	} else if s.URL != "" {
-		multipartForm.AddField("url", s.URL)
-	} else if s.Document != "" {
-		multipartForm.AddFile("doc", s.Document)
-	}
-
-	if s.Sentences != "" {
-		multipartForm.AddField("sentences", s.Sentences)
-	} else if s.Limit != "" {
-		multipartForm.AddField("limit", s.Limit)
-	}
+	multipartForm.AddOptionalField("lang", s.InputLanguage)
+	multipartForm.AddMutualExclusiveFields(
+		map[string]string{
+			"txt": s.Text,
+			"url": s.URL,
+			"doc": s.Document,
+		},
+	)
+	multipartForm.AddMutualExclusiveFields(
+		map[string]string{
+			"sentences": s.Sentences,
+			"limit":     s.Limit,
+		},
+	)
 
 	return multipartForm, nil
 }

@@ -41,22 +41,11 @@ func (t *TextClustering) ToMultipartForm() (multipartform.MultipartForm, error) 
 	multipartform := multipartform.New()
 
 	multipartform.AddField("key", t.Key)
-
 	multipartform.AddField("lang", t.InputLanguage)
-
 	multipartform.AddField("txt", t.Text)
-
-	if t.ID != nil {
-		multipartform.AddField("id", *t.ID)
-	}
-
-	if t.Mode != nil {
-		multipartform.AddField("mode", *t.Mode)
-	}
-
-	if t.StopWords != nil {
-		multipartform.AddField("sw", *t.StopWords)
-	}
+	multipartform.AddOptionalField("id", t.ID)
+	multipartform.AddOptionalField("mode", t.Mode)
+	multipartform.AddOptionalField("sw", t.StopWords)
 
 	return multipartform, nil
 

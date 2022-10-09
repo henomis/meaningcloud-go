@@ -52,14 +52,13 @@ func (d *DocumentStructure) ToMultipartForm() (multipartform.MultipartForm, erro
 	multipartForm := multipartform.New()
 
 	multipartForm.AddField("key", d.Key)
-
-	if d.Text != "" {
-		multipartForm.AddField("txt", d.Text)
-	} else if d.URL != "" {
-		multipartForm.AddField("url", d.URL)
-	} else if d.Document != "" {
-		multipartForm.AddFile("doc", d.Document)
-	}
+	multipartForm.AddMutualExclusiveFields(
+		map[string]string{
+			"txt": d.Text,
+			"url": d.URL,
+			"doc": d.Document,
+		},
+	)
 
 	return multipartForm, nil
 }

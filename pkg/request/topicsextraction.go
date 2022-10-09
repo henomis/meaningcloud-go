@@ -67,44 +67,24 @@ func (t *TopicsExtraction) ToMultipartForm() (multipartform.MultipartForm, error
 		multipartForm.AddField("ilang", *t.OutputLanguage)
 	}
 
-	if t.Text != "" {
-		multipartForm.AddField("txt", t.Text)
-	} else if t.URL != "" {
-		multipartForm.AddField("url", t.URL)
-	} else if t.Document != "" {
-		multipartForm.AddFile("doc", t.Document)
-	}
+	multipartForm.AddMutualExclusiveFields(
+		map[string]string{
+			"txt": t.Text,
+			"url": t.URL,
+			"doc": t.Document,
+		},
+	)
 
-	if t.TextFormat != nil {
-		multipartForm.AddField("txtf", *t.TextFormat)
-	}
-	if t.TopicTypes != nil {
-		multipartForm.AddField("tt", *t.TopicTypes)
-	}
-	if t.UnknownWords != nil {
-		multipartForm.AddField("uw", *t.UnknownWords)
-	}
-	if t.RelaxedTypography != nil {
-		multipartForm.AddField("rt", *t.RelaxedTypography)
-	}
-	if t.UserDictionary != nil {
-		multipartForm.AddField("ud", *t.UserDictionary)
-	}
-	if t.ShowSubtopics != nil {
-		multipartForm.AddField("st", *t.ShowSubtopics)
-	}
-	if t.DisambiguationApplied != nil {
-		multipartForm.AddField("dm", *t.DisambiguationApplied)
-	}
-	if t.SemanticDisambiguationGrouping != nil {
-		multipartForm.AddField("sdg", *t.SemanticDisambiguationGrouping)
-	}
-	if t.DisambiguationContext != nil {
-		multipartForm.AddField("cont", *t.DisambiguationContext)
-	}
-	if t.TimeReference != nil {
-		multipartForm.AddField("timeref", *t.TimeReference)
-	}
+	multipartForm.AddOptionalField("txtf", t.TextFormat)
+	multipartForm.AddOptionalField("tt", t.TopicTypes)
+	multipartForm.AddOptionalField("uw", t.UnknownWords)
+	multipartForm.AddOptionalField("rt", t.RelaxedTypography)
+	multipartForm.AddOptionalField("ud", t.UserDictionary)
+	multipartForm.AddOptionalField("st", t.ShowSubtopics)
+	multipartForm.AddOptionalField("dm", t.DisambiguationApplied)
+	multipartForm.AddOptionalField("sdg", t.SemanticDisambiguationGrouping)
+	multipartForm.AddOptionalField("cont", t.DisambiguationContext)
+	multipartForm.AddOptionalField("timeref", t.TimeReference)
 
 	return multipartForm, nil
 }

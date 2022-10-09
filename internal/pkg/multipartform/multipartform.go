@@ -20,6 +20,21 @@ func (m MultipartForm) AddField(name string, value string) {
 	m[MultipartField{Type: MultipartFormField, Name: name}] = value
 }
 
+func (m MultipartForm) AddOptionalField(name string, value *string) {
+	if value != nil {
+		m[MultipartField{Type: MultipartFormField, Name: name}] = *value
+	}
+}
+
 func (m MultipartForm) AddFile(name string, file string) {
 	m[MultipartField{Type: MultipartFormFile, Name: name}] = file
+}
+
+func (m MultipartForm) AddMutualExclusiveFields(fields map[string]string) {
+	for name, value := range fields {
+		if value != "" {
+			m[MultipartField{Type: MultipartFormField, Name: name}] = value
+			return
+		}
+	}
 }

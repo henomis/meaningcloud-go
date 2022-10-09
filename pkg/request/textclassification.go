@@ -58,32 +58,19 @@ func (t *TextClassification) ToMultipartForm() (multipartform.MultipartForm, err
 	multipartForm := multipartform.New()
 
 	multipartForm.AddField("key", t.Key)
-
-	if t.Text != "" {
-		multipartForm.AddField("txt", t.Text)
-	} else if t.URL != "" {
-		multipartForm.AddField("url", t.URL)
-	} else if t.Document != "" {
-		multipartForm.AddFile("doc", t.Document)
-	}
-
+	multipartForm.AddMutualExclusiveFields(
+		map[string]string{
+			"txt": t.Text,
+			"url": t.URL,
+			"doc": t.Document,
+		},
+	)
 	multipartForm.AddField("model", t.Model)
-
-	if t.Verbose != nil {
-		multipartForm.AddField("verbose", *t.Verbose)
-	}
-	if t.Title != nil {
-		multipartForm.AddField("title", *t.Title)
-	}
-	if t.Abstract != nil {
-		multipartForm.AddField("abstract", *t.Abstract)
-	}
-	if t.CategoriesFilter != nil {
-		multipartForm.AddField("categories_filter", *t.CategoriesFilter)
-	}
-	if t.ExpandHierarchy != nil {
-		multipartForm.AddField("expand_hierarchy", *t.ExpandHierarchy)
-	}
+	multipartForm.AddOptionalField("verbose", t.Verbose)
+	multipartForm.AddOptionalField("title", t.Title)
+	multipartForm.AddOptionalField("abstract", t.Abstract)
+	multipartForm.AddOptionalField("categories_filter", t.CategoriesFilter)
+	multipartForm.AddOptionalField("expand_hierarchy", t.ExpandHierarchy)
 
 	return multipartForm, nil
 }

@@ -65,48 +65,24 @@ func (s *Sentiment) ToMultipartForm() (multipartform.MultipartForm, error) {
 
 	multipartForm.AddField("key", s.Key)
 	multipartForm.AddField("lang", s.InputLanguage)
-	if s.OutputLanguage != nil {
-		multipartForm.AddField("ilang", *s.OutputLanguage)
-	}
-
-	if s.Text != "" {
-		multipartForm.AddField("txt", s.Text)
-	} else if s.URL != "" {
-		multipartForm.AddField("url", s.URL)
-	} else if s.Document != "" {
-		multipartForm.AddFile("doc", s.Document)
-	}
-
-	if s.TextFormat != nil {
-		multipartForm.AddField("txtf", *s.TextFormat)
-	}
-	if s.Model != nil {
-		multipartForm.AddField("model", *s.Model)
-	}
-	if s.Verbose != nil {
-		multipartForm.AddField("verbose", *s.Verbose)
-	}
-	if s.ExpandGlobalPolarity != nil {
-		multipartForm.AddField("egp", *s.ExpandGlobalPolarity)
-	}
-	if s.ReliableText != nil {
-		multipartForm.AddField("rt", *s.ReliableText)
-	}
-	if s.UnknownWords != nil {
-		multipartForm.AddField("uw", *s.UnknownWords)
-	}
-	if s.DisambiguationApplied != nil {
-		multipartForm.AddField("dm", *s.DisambiguationApplied)
-	}
-	if s.SemanticDisambiguationGrouping != nil {
-		multipartForm.AddField("sdg", *s.SemanticDisambiguationGrouping)
-	}
-	if s.DisambiguationContext != nil {
-		multipartForm.AddField("cont", *s.DisambiguationContext)
-	}
-	if s.UserDictionary != nil {
-		multipartForm.AddField("ud", *s.UserDictionary)
-	}
+	multipartForm.AddOptionalField("ilang", s.OutputLanguage)
+	multipartForm.AddMutualExclusiveFields(
+		map[string]string{
+			"txt": s.Text,
+			"url": s.URL,
+			"doc": s.Document,
+		},
+	)
+	multipartForm.AddOptionalField("txtf", s.TextFormat)
+	multipartForm.AddOptionalField("model", s.Model)
+	multipartForm.AddOptionalField("verbose", s.Verbose)
+	multipartForm.AddOptionalField("egp", s.ExpandGlobalPolarity)
+	multipartForm.AddOptionalField("rt", s.ReliableText)
+	multipartForm.AddOptionalField("uw", s.UnknownWords)
+	multipartForm.AddOptionalField("dm", s.DisambiguationApplied)
+	multipartForm.AddOptionalField("sdg", s.SemanticDisambiguationGrouping)
+	multipartForm.AddOptionalField("cont", s.DisambiguationContext)
+	multipartForm.AddOptionalField("ud", s.UserDictionary)
 
 	return multipartForm, nil
 }

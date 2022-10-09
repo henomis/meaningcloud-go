@@ -67,72 +67,28 @@ func (p *Parser) ToMultipartForm() (multipartform.MultipartForm, error) {
 	multipartForm := multipartform.New()
 
 	multipartForm.AddField("key", p.Key)
-
 	multipartForm.AddField("lang", p.InputLanguage)
-
-	if p.OutputLanguage != nil {
-		multipartForm.AddField("of", *p.OutputLanguage)
-	}
-
-	if p.Text != "" {
-		multipartForm.AddField("txt", p.Text)
-	} else if p.URL != "" {
-		multipartForm.AddField("url", p.URL)
-	} else if p.Document != "" {
-		multipartForm.AddFile("doc", p.Document)
-	}
-
-	if p.Verbose != nil {
-		multipartForm.AddField("verbose", *p.Verbose)
-	}
-
-	if p.TextFormat != nil {
-		multipartForm.AddField("txtf", *p.TextFormat)
-	}
-
-	if p.UnknownWords != nil {
-		multipartForm.AddField("uw", *p.UnknownWords)
-	}
-
-	if p.RelaxedTypography != nil {
-		multipartForm.AddField("rt", *p.RelaxedTypography)
-	}
-
-	if p.DisambiguationApplied != nil {
-		multipartForm.AddField("dm", *p.DisambiguationApplied)
-	}
-
-	if p.SemanticDisambiguationGrouping != nil {
-		multipartForm.AddField("sdg", *p.SemanticDisambiguationGrouping)
-	}
-
-	if p.DisambiguationContext != nil {
-		multipartForm.AddField("cont", *p.DisambiguationContext)
-	}
-
-	if p.UserDictionary != nil {
-		multipartForm.AddField("ud", *p.UserDictionary)
-	}
-
-	if p.TopicTypes != nil {
-		multipartForm.AddField("tt", *p.TopicTypes)
-	}
-
-	if p.ShowSubtopics != nil {
-		multipartForm.AddField("st", *p.ShowSubtopics)
-	}
-
-	if p.TimeReference != nil {
-		multipartForm.AddField("timeref", *p.TimeReference)
-	}
-
-	if p.SentimentModel != nil {
-		multipartForm.AddField("sm", *p.SentimentModel)
-	}
-
-	if p.ExpandGlobalPolarity != nil {
-		multipartForm.AddField("egp", *p.ExpandGlobalPolarity)
-	}
+	multipartForm.AddOptionalField("of", p.OutputLanguage)
+	multipartForm.AddMutualExclusiveFields(
+		map[string]string{
+			"txt": p.Text,
+			"url": p.URL,
+			"doc": p.Document,
+		},
+	)
+	multipartForm.AddOptionalField("verbose", p.Verbose)
+	multipartForm.AddOptionalField("txtf", p.TextFormat)
+	multipartForm.AddOptionalField("uw", p.UnknownWords)
+	multipartForm.AddOptionalField("rt", p.RelaxedTypography)
+	multipartForm.AddOptionalField("dm", p.DisambiguationApplied)
+	multipartForm.AddOptionalField("sdg", p.SemanticDisambiguationGrouping)
+	multipartForm.AddOptionalField("cont", p.DisambiguationContext)
+	multipartForm.AddOptionalField("ud", p.UserDictionary)
+	multipartForm.AddOptionalField("tt", p.TopicTypes)
+	multipartForm.AddOptionalField("st", p.ShowSubtopics)
+	multipartForm.AddOptionalField("timeref", p.TimeReference)
+	multipartForm.AddOptionalField("sm", p.SentimentModel)
+	multipartForm.AddOptionalField("egp", p.ExpandGlobalPolarity)
 
 	return multipartForm, nil
 }

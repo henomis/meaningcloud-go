@@ -56,26 +56,17 @@ func (d *DeepCategorization) ToMultipartForm() (multipartform.MultipartForm, err
 	multipartForm := multipartform.New()
 
 	multipartForm.AddField("key", d.Key)
-
-	if d.Text != "" {
-		multipartForm.AddField("txt", d.Text)
-	} else if d.URL != "" {
-		multipartForm.AddField("url", d.URL)
-	} else if d.Document != "" {
-		multipartForm.AddFile("doc", d.Document)
-	}
-
+	multipartForm.AddMutualExclusiveFields(
+		map[string]string{
+			"txt": d.Text,
+			"url": d.URL,
+			"doc": d.Document,
+		},
+	)
 	multipartForm.AddField("model", d.Model)
-
-	if d.Verbose != nil {
-		multipartForm.AddField("verbose", *d.Verbose)
-	}
-	if d.Popolarity != nil {
-		multipartForm.AddField("popolarity", *d.Popolarity)
-	}
-	if d.UserDictionary != nil {
-		multipartForm.AddField("ud", *d.UserDictionary)
-	}
+	multipartForm.AddField("verbose", *d.Verbose)
+	multipartForm.AddOptionalField("popolarity", d.Popolarity)
+	multipartForm.AddOptionalField("ud", d.UserDictionary)
 
 	return multipartForm, nil
 }
