@@ -1,7 +1,6 @@
 package response
 
 import (
-	"encoding/json"
 	"io"
 )
 
@@ -13,6 +12,5 @@ type CorporateReputation struct {
 }
 
 func (c *CorporateReputation) Decode(body io.ReadCloser) error {
-	defer body.Close()
-	return json.NewDecoder(body).Decode(c)
+	return decode(body, c)
 }

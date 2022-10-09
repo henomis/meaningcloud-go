@@ -1,7 +1,6 @@
 package response
 
 import (
-	"encoding/json"
 	"io"
 )
 
@@ -21,6 +20,5 @@ type EmailsInfo struct {
 }
 
 func (d *DocumentStructure) Decode(body io.ReadCloser) error {
-	defer body.Close()
-	return json.NewDecoder(body).Decode(d)
+	return decode(body, d)
 }

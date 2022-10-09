@@ -1,6 +1,10 @@
 package response
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+	"io"
+)
 
 type Response struct {
 	Status Status `json:"status"`
@@ -35,4 +39,9 @@ func (s *StatusIntValues) IsSuccess() bool {
 
 func (s *StatusIntValues) Error() error {
 	return fmt.Errorf("error code %d: %s", s.Code, s.Msg)
+}
+
+func decode(body io.ReadCloser, data interface{}) error {
+	defer body.Close()
+	return json.NewDecoder(body).Decode(data)
 }

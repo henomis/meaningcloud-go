@@ -1,7 +1,6 @@
 package response
 
 import (
-	"encoding/json"
 	"io"
 )
 
@@ -18,6 +17,5 @@ type Cluster struct {
 }
 
 func (t *TextClustering) Decode(body io.ReadCloser) error {
-	defer body.Close()
-	return json.NewDecoder(body).Decode(t)
+	return decode(body, t)
 }

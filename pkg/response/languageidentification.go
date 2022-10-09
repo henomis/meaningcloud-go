@@ -1,7 +1,6 @@
 package response
 
 import (
-	"encoding/json"
 	"io"
 )
 
@@ -23,6 +22,5 @@ type Language struct {
 }
 
 func (l *LanguageIdentification) Decode(body io.ReadCloser) error {
-	defer body.Close()
-	return json.NewDecoder(body).Decode(l)
+	return decode(body, l)
 }
