@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"time"
 
 	meaningcloudgo "github.com/henomis/meaningcloud-go"
 	"github.com/henomis/meaningcloud-go/pkg/request"
@@ -16,6 +17,7 @@ func main() {
 	meaningCloudClient := meaningcloudgo.New(
 		meaningcloudgo.MeaningCloudEndpoint,
 		Key,
+		10*time.Second,
 	)
 
 	request := &request.Parser{}

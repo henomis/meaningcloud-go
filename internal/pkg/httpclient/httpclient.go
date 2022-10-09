@@ -7,6 +7,7 @@ import (
 	"mime/multipart"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/henomis/meaningcloud-go/internal/pkg/multipartform"
 )
@@ -20,10 +21,12 @@ type RequestData interface {
 	ToMultipartForm() (multipartform.MultipartForm, error)
 }
 
-func New(baseURL string) *HttpClient {
+func New(baseURL string, timeout time.Duration) *HttpClient {
 	return &HttpClient{
-		httpClient: &http.Client{},
-		baseURL:    baseURL,
+		httpClient: &http.Client{
+			Timeout: timeout,
+		},
+		baseURL: baseURL,
 	}
 }
 
@@ -68,8 +71,10 @@ func (h *HttpClient) Request(path string, requestData RequestData) (io.ReadClose
 	if err != nil {
 		return nil, err
 	}
+
 	request.Header.Set("Accept", "application/json")
 	request.Header.Set("Content-Type", multipartWriter.FormDataContentType())
+
 	response, err := h.httpClient.Do(request)
 	if err != nil {
 		return nil, err

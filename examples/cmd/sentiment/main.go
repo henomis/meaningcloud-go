@@ -4,18 +4,20 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"time"
 
 	meaningcloudgo "github.com/henomis/meaningcloud-go"
 	"github.com/henomis/meaningcloud-go/pkg/request"
 )
 
-const Key = "YOUR_API_KEY"
+const Key = "cf55e81f2fb71c436ac70ac4c29ba014"
 
 func main() {
 
 	meaningCloudClient := meaningcloudgo.New(
 		meaningcloudgo.MeaningCloudEndpoint,
 		Key,
+		10*time.Second,
 	)
 
 	// Text analysis

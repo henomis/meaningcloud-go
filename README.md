@@ -67,6 +67,7 @@ func main() {
 	meaningCloudClient := meaningcloudgo.New(
 		meaningcloudgo.MeaningCloudEndpoint,
 		Key,
+		10 * time.Second,
 	)
 
 	// Text analysis

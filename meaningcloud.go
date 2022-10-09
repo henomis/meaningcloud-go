@@ -2,6 +2,7 @@ package meaningcloudgo
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/henomis/meaningcloud-go/internal/pkg/httpclient"
 	"github.com/henomis/meaningcloud-go/pkg/request"
@@ -27,9 +28,9 @@ type MeaningCloudClient struct {
 	key        string
 }
 
-func New(endpoint string, key string) *MeaningCloudClient {
+func New(endpoint string, key string, timeout time.Duration) *MeaningCloudClient {
 	return &MeaningCloudClient{
-		httpClient: httpclient.New(endpoint),
+		httpClient: httpclient.New(endpoint, timeout),
 		key:        key,
 	}
 }
