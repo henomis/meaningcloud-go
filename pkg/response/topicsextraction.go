@@ -2,7 +2,6 @@ package response
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 )
 
@@ -179,14 +178,6 @@ type Standard struct {
 type Semtheme struct {
 	ID   string `json:"id"`
 	Type string `json:"type"`
-}
-
-func (t *TopicsExtraction) Ok() bool {
-	return t.Status.Code == "0"
-}
-
-func (t *TopicsExtraction) Error() error {
-	return fmt.Errorf("error code %s: %s", t.Status.Code, t.Status.Msg)
 }
 
 func (t *TopicsExtraction) Decode(body io.ReadCloser) error {

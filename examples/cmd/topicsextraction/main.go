@@ -32,8 +32,8 @@ func main() {
 		log.Fatalf("error while performing analysis: %v", err)
 	}
 
-	if !response.Ok() {
-		log.Fatalf("error: %s", response.Error())
+	if !response.Status.IsSuccess() {
+		log.Fatalf("error: %s", response.Status.Error())
 	}
 
 	bytes, _ := json.MarshalIndent(response, "", "  ")
@@ -47,8 +47,8 @@ func main() {
 		log.Fatalf("error while performing analysis: %v", err)
 	}
 
-	if !response.Ok() {
-		log.Fatalf("error: %s", response.Error())
+	if !response.Status.IsSuccess() {
+		log.Fatalf("error: %s", response.Status.Error())
 	}
 
 	bytes, _ = json.MarshalIndent(response, "", "  ")
@@ -62,8 +62,8 @@ func main() {
 		log.Fatalf("error while performing analysis: %v", err)
 	}
 
-	if !response.Ok() {
-		log.Fatalf("error: %s", response.Error())
+	if !response.Status.IsSuccess() {
+		log.Fatalf("error: %s", response.Status.Error())
 	}
 
 	bytes, _ = json.MarshalIndent(response, "", "  ")

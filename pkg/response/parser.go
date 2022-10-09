@@ -2,7 +2,6 @@ package response
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 )
 
@@ -94,14 +93,6 @@ type GlobalSentiment struct {
 	Subjectivity string `json:"subjectivity"`
 	Confidence   string `json:"confidence"`
 	Irony        string `json:"irony"`
-}
-
-func (p *Parser) Ok() bool {
-	return p.Status.Code == "0"
-}
-
-func (p *Parser) Error() error {
-	return fmt.Errorf("error code %s: %s", p.Status.Code, p.Status.Msg)
 }
 
 func (p *Parser) Decode(body io.ReadCloser) error {

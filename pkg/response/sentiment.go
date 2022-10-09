@@ -2,7 +2,6 @@ package response
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 )
 
@@ -112,14 +111,6 @@ type SentimentedEntity struct {
 	Endp     string   `json:"endp"`
 	Type     string   `json:"type"`
 	ScoreTag ScoreTag `json:"score_tag"`
-}
-
-func (s *Sentiment) Ok() bool {
-	return s.Status.Code == "0"
-}
-
-func (s *Sentiment) Error() error {
-	return fmt.Errorf("error code %s: %s", s.Status.Code, s.Status.Msg)
 }
 
 func (s *Sentiment) Decode(body io.ReadCloser) error {

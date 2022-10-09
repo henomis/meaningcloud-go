@@ -2,7 +2,6 @@ package response
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 )
 
@@ -21,14 +20,6 @@ type Language struct {
 	ISO6395   string  `json:"iso-639-5"`
 	DeepTime  string  `json:"deep_time"`
 	Time      string  `json:"time"`
-}
-
-func (l *LanguageIdentification) Ok() bool {
-	return l.Status.Code == 0
-}
-
-func (l *LanguageIdentification) Error() error {
-	return fmt.Errorf("error code %d: %s", l.Status.Code, l.Status.Msg)
 }
 
 func (l *LanguageIdentification) Decode(body io.ReadCloser) error {

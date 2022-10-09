@@ -2,7 +2,6 @@ package response
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 )
 
@@ -19,14 +18,6 @@ type EmailsInfo struct {
 	To      []string `json:"to"`
 	Cc      []string `json:"cc"`
 	Subject []string `json:"subject"`
-}
-
-func (d *DocumentStructure) Ok() bool {
-	return d.Status.Code == "0"
-}
-
-func (d *DocumentStructure) Error() error {
-	return fmt.Errorf("error code %s: %s", d.Status.Code, d.Status.Msg)
 }
 
 func (d *DocumentStructure) Decode(body io.ReadCloser) error {

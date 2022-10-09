@@ -2,7 +2,6 @@ package response
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 )
 
@@ -29,14 +28,6 @@ type Term struct {
 type Offset struct {
 	Endp string `json:"endp"`
 	Inip string `json:"inip"`
-}
-
-func (d *DeepCategorization) Ok() bool {
-	return d.Status.Code == "0"
-}
-
-func (d *DeepCategorization) Error() error {
-	return fmt.Errorf("error code %s: %s", d.Status.Code, d.Status.Msg)
 }
 
 func (d *DeepCategorization) Decode(body io.ReadCloser) error {
