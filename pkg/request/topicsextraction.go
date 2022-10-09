@@ -34,23 +34,13 @@ func (t *TopicsExtraction) Validate() error {
 		return fmt.Errorf("invalid query %w", err)
 	}
 
-	if t.Text == "" && t.URL == "" && t.Document == "" {
-		return fmt.Errorf("one of the following fields must be set: txt, url, doc")
-	}
-
-	if t.Text != "" && (t.URL != "" || t.Document != "") {
-		return fmt.Errorf("only one of the following fields can be set: txt, url, doc")
-	}
-
-	if t.URL != "" && (t.Text != "" || t.Document != "") {
-		return fmt.Errorf("only one of the following fields can be set: txt, url, doc")
-	}
-
-	if t.Document != "" && (t.Text != "" || t.URL != "") {
-		return fmt.Errorf("only one of the following fields can be set: txt, url, doc")
-	}
-
-	return nil
+	return validateMutualExclusiveFields(
+		map[string]string{
+			"txt": t.Text,
+			"url": t.URL,
+			"doc": t.Document,
+		},
+	)
 }
 
 func (t *TopicsExtraction) ToMultipartForm() (multipartform.MultipartForm, error) {

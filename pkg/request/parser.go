@@ -37,23 +37,13 @@ func (p *Parser) Validate() error {
 		return fmt.Errorf("invalid query %w", err)
 	}
 
-	if p.Text == "" && p.URL == "" && p.Document == "" {
-		return fmt.Errorf("one of the following fields must be set: txt, url, doc")
-	}
-
-	if p.Text != "" && (p.URL != "" || p.Document != "") {
-		return fmt.Errorf("only one of the following fields can be set: txt, url, doc")
-	}
-
-	if p.URL != "" && (p.Text != "" || p.Document != "") {
-		return fmt.Errorf("only one of the following fields can be set: txt, url, doc")
-	}
-
-	if p.Document != "" && (p.Text != "" || p.URL != "") {
-		return fmt.Errorf("only one of the following fields can be set: txt, url, doc")
-	}
-
-	return nil
+	return validateMutualExclusiveFields(
+		map[string]string{
+			"txt": p.Text,
+			"url": p.URL,
+			"doc": p.Document,
+		},
+	)
 
 }
 

@@ -26,23 +26,13 @@ func (d *DeepCategorization) Validate() error {
 		return fmt.Errorf("invalid query %w", err)
 	}
 
-	if d.Text == "" && d.URL == "" && d.Document == "" {
-		return fmt.Errorf("one of the following fields must be set: txt, url, doc")
-	}
-
-	if d.Text != "" && (d.URL != "" || d.Document != "") {
-		return fmt.Errorf("only one of the following fields can be set: txt, url, doc")
-	}
-
-	if d.URL != "" && (d.Text != "" || d.Document != "") {
-		return fmt.Errorf("only one of the following fields can be set: txt, url, doc")
-	}
-
-	if d.Document != "" && (d.Text != "" || d.URL != "") {
-		return fmt.Errorf("only one of the following fields can be set: txt, url, doc")
-	}
-
-	return nil
+	return validateMutualExclusiveFields(
+		map[string]string{
+			"txt": d.Text,
+			"url": d.URL,
+			"doc": d.Document,
+		},
+	)
 
 }
 

@@ -21,15 +21,12 @@ func (l *LanguageIdentification) Validate() error {
 		return fmt.Errorf("invalid query %w", err)
 	}
 
-	if l.Text == "" && l.URL == "" {
-		return fmt.Errorf("one of the following fields must be set: txt, url, doc")
-	}
-
-	if l.Text != "" && l.URL != "" {
-		return fmt.Errorf("only one of the following fields can be set: txt, url, doc")
-	}
-
-	return nil
+	return validateMutualExclusiveFields(
+		map[string]string{
+			"txt": l.Text,
+			"url": l.URL,
+		},
+	)
 
 }
 

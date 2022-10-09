@@ -26,31 +26,22 @@ func (s *Summarization) Validate() error {
 		return fmt.Errorf("invalid query %w", err)
 	}
 
-	if s.Text == "" && s.URL == "" && s.Document == "" {
-		return fmt.Errorf("one of the following fields must be set: txt, url, doc")
+	if err := validateMutualExclusiveFields(
+		map[string]string{
+			"txt": s.Text,
+			"url": s.URL,
+			"doc": s.Document,
+		},
+	); err != nil {
+		return err
 	}
 
-	if s.Text != "" && (s.URL != "" || s.Document != "") {
-		return fmt.Errorf("only one of the following fields can be set: txt, url, doc")
-	}
-
-	if s.URL != "" && (s.Text != "" || s.Document != "") {
-		return fmt.Errorf("only one of the following fields can be set: txt, url, doc")
-	}
-
-	if s.Document != "" && (s.Text != "" || s.URL != "") {
-		return fmt.Errorf("only one of the following fields can be set: txt, url, doc")
-	}
-
-	if s.Sentences != "" && s.Limit != "" {
-		return fmt.Errorf("only one of the following fields can be set: sentences, limit")
-	}
-
-	if s.Sentences == "" && s.Limit == "" {
-		return fmt.Errorf("one of the following fields must be set: sentences, limit")
-	}
-
-	return nil
+	return validateMutualExclusiveFields(
+		map[string]string{
+			"sentences": s.Sentences,
+			"limit":     s.Limit,
+		},
+	)
 
 }
 
