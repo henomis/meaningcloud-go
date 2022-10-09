@@ -16,7 +16,7 @@ type HttpClient struct {
 	baseURL    string
 }
 
-type Query interface {
+type RequestData interface {
 	ToMultipartForm() (multipartform.MultipartForm, error)
 }
 
@@ -27,9 +27,9 @@ func New(baseURL string) *HttpClient {
 	}
 }
 
-func (h *HttpClient) Request(path string, query Query) (io.ReadCloser, error) {
+func (h *HttpClient) Request(path string, requestData RequestData) (io.ReadCloser, error) {
 
-	multipartForm, err := query.ToMultipartForm()
+	multipartForm, err := requestData.ToMultipartForm()
 	if err != nil {
 		return nil, fmt.Errorf("invalid query: %w", err)
 	}
