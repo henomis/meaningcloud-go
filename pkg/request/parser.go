@@ -11,6 +11,7 @@ type Parser struct {
 	Request
 	InputLanguage  string  `validate:"required,oneof=auto en es fr it pt ca"`
 	OutputLanguage *string `validate:"omitempty,oneof=auto en es fr it pt ca"`
+	outputFormat   *string
 	// The following three fields are mutually exclusive
 	Text                           string  `validate:"-"`
 	URL                            string  `validate:"omitempty,url"`
@@ -47,6 +48,11 @@ func (p *Parser) Validate() error {
 
 }
 
+func (p *Parser) SetImageOutputFormat() {
+	outputFormatImage := "img"
+	p.outputFormat = &outputFormatImage
+}
+
 func (p *Parser) ToMultipartForm() (multipartform.MultipartForm, error) {
 
 	if err := p.Validate(); err != nil {
@@ -58,6 +64,7 @@ func (p *Parser) ToMultipartForm() (multipartform.MultipartForm, error) {
 	multipartForm.AddField("key", p.Key)
 	multipartForm.AddField("lang", p.InputLanguage)
 	multipartForm.AddOptionalField("ilang", p.OutputLanguage)
+	multipartForm.AddOptionalField("of", p.outputFormat)
 	multipartForm.AddMutualExclusiveFields(
 		map[string]string{
 			"txt": p.Text,

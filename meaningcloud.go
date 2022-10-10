@@ -2,6 +2,7 @@ package meaningcloudgo
 
 import (
 	"fmt"
+	"io"
 	"time"
 
 	"github.com/henomis/meaningcloud-go/internal/pkg/httpclient"
@@ -147,6 +148,21 @@ func (m *MeaningCloudClient) Parser(
 	}
 
 	return parserResponse, nil
+}
+
+func (m *MeaningCloudClient) ParserImage(
+	parserRequest *request.Parser,
+) (io.ReadCloser, error) {
+
+	parserRequest.Key = m.key
+	parserRequest.SetImageOutputFormat()
+
+	body, err := m.httpClient.Request(parserPath, parserRequest)
+	if err != nil {
+		return nil, fmt.Errorf("error while sending request: %w", err)
+	}
+
+	return body, nil
 }
 
 func (m *MeaningCloudClient) CorporateReputation(
