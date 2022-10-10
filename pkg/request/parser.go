@@ -57,7 +57,7 @@ func (p *Parser) ToMultipartForm() (multipartform.MultipartForm, error) {
 
 	multipartForm.AddField("key", p.Key)
 	multipartForm.AddField("lang", p.InputLanguage)
-	multipartForm.AddOptionalField("of", p.OutputLanguage)
+	multipartForm.AddOptionalField("ilang", p.OutputLanguage)
 	multipartForm.AddMutualExclusiveFields(
 		map[string]string{
 			"txt": p.Text,
