@@ -12,7 +12,7 @@ MeaningCloud is a cloud-based text analytics service that through APIs allows yo
 ## SDK versions
 
 
-|                          | v1.0.0                 |
+|                          | v1.1                 |
 |--------------------------|------------------------|
 | Deep Categorization      | deepcategorization-1.0 |
 | Topics Extraction        | topics-2.0             |
