@@ -10,7 +10,7 @@ import (
 	"github.com/henomis/meaningcloud-go/pkg/request"
 )
 
-const Key = "cf55e81f2fb71c436ac70ac4c29ba014"
+const Key = "YOUR_API_KEY"
 
 func main() {
 
